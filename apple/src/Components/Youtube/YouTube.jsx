@@ -5,15 +5,13 @@ const Youtube = () => {
   const [youTubeVideos, setYouTubeVideos] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw"
+const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=${apiKey}`;
 
-      // "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCxA7AzkI2Sndf8S1G5rSkwQ&maxResults=9&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw" --Evangadi
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setYouTubeVideos(data.items);
-      });
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setYouTubeVideos(data.items))
+      .catch((err) => console.error("Failed to fetch videos:", err));
   }, []);
 
   return (
@@ -25,9 +23,12 @@ const Youtube = () => {
               Latest Videos
             </div>
           </div>
-          {youTubeVideos.map((singleVideo, i) => {
-            const vidId = singleVideo.id.videoId;
+          {youTubeVideos.map((video, i) => {
+            const vidId = video?.id?.videoId;
             const vidLink = `https://www.youtube.com/watch?v=${vidId}`;
+            const snippet = video?.snippet;
+
+            if (!vidId || !snippet) return null;
 
             return (
               <div key={i} className="col-sm-12 col-md-4">
@@ -35,8 +36,8 @@ const Youtube = () => {
                   <div className="videoThumbnail">
                     <a href={vidLink} target="_blank" rel="noopener noreferrer">
                       <img
-                        src={singleVideo.snippet.thumbnails.high.url}
-                        alt={singleVideo.snippet.title}
+                        src={snippet.thumbnails.high.url}
+                        alt={snippet.title}
                       />
                     </a>
                   </div>
@@ -47,12 +48,10 @@ const Youtube = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {singleVideo.snippet.title}
+                        {snippet.title}
                       </a>
                     </div>
-                    <div className="videoDesc">
-                      {singleVideo.snippet.description}
-                    </div>
+                    <div className="videoDesc">{snippet.description}</div>
                   </div>
                 </div>
               </div>
@@ -93,53 +92,78 @@ export default Youtube;
 
 
 
+// import React, { useState, useEffect } from "react";
+// import "./YouTube.css";
 
+// const Youtube = () => {
+//   const [youTubeVideos, setYouTubeVideos] = useState([]);
+//   const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+//   const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=${apiKey}`;
 
+//   fetch(url);
 
+//   useEffect(() => {
+//     fetch(url
+//       // "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&
+//       // key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw"
 
+//       // "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCxA7AzkI2Sndf8S1G5rSkwQ&maxResults=9&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw" --Evangadi
+//     )
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setYouTubeVideos(data.items);
+//       });
+//   }, []);
 
+//   return (
+//     <div className="allVideosWrapper">
+//       <div className="container">
+//         <div className="row h-100 align-items-center justify-content-center text-center">
+//           <div className="col-12">
+//             <div className="title-wraper bold video-title-wrapper">
+//               Latest Videos
+//             </div>
+//           </div>
+//           {youTubeVideos.map((singleVideo, i) => {
+//             const vidId = singleVideo.id.videoId;
+//             const vidLink = `https://www.youtube.com/watch?v=${vidId}`;
 
+//             return (
+//               <div key={i} className="col-sm-12 col-md-4">
+//                 <div className="singleVideoWrapper">
+//                   <div className="videoThumbnail">
+//                     <a href={vidLink} target="_blank" rel="noopener noreferrer">
+//                       <img
+//                         src={singleVideo.snippet.thumbnails.high.url}
+//                         alt={singleVideo.snippet.title}
+//                       />
+//                     </a>
+//                   </div>
+//                   <div className="videoInfoWrapper">
+//                     <div className="videoTitle">
+//                       <a
+//                         href={vidLink}
+//                         target="_blank"
+//                         rel="noopener noreferrer"
+//                       >
+//                         {singleVideo.snippet.title}
+//                       </a>
+//                     </div>
+//                     <div className="videoDesc">
+//                       {singleVideo.snippet.description}
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// export default Youtube;
 
 //!class components
 // import React, { Component } from "react";
@@ -209,5 +233,81 @@ export default Youtube;
 //     );
 //   }
 // }
+
+// export default Youtube;
+
+//in async /await
+// import React, { useState, useEffect } from "react";
+// import "./YouTube.css";
+
+// const Youtube = () => {
+//   const [youTubeVideos, setYouTubeVideos] = useState([]);
+
+//   useEffect(() => {
+//     const fetchVideos = async () => {
+//       try {
+//         const response = await fetch(
+//           "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw"
+//         );
+//         const data = await response.json();
+//         setYouTubeVideos(data.items || []);
+//       } catch (error) {
+//         console.error("Failed to fetch videos:", error);
+//       }
+//     };
+
+//     fetchVideos();
+//   }, []);
+
+//   return (
+//     <div className="allVideosWrapper">
+//       <div className="container">
+//         <div className="row h-100 align-items-center justify-content-center text-center">
+//           <div className="col-12">
+//             <div className="title-wraper bold video-title-wrapper">
+//               Latest Videos
+//             </div>
+//           </div>
+
+//           {youTubeVideos.map((video, i) => {
+//             const vidId = video?.id?.videoId;
+//             const snippet = video?.snippet;
+
+//             if (!vidId || !snippet) return null;
+
+//             const vidLink = `https://www.youtube.com/watch?v=${vidId}`;
+
+//             return (
+//               <div key={i} className="col-sm-12 col-md-4">
+//                 <div className="singleVideoWrapper">
+//                   <div className="videoThumbnail">
+//                     <a href={vidLink} target="_blank" rel="noopener noreferrer">
+//                       <img
+//                         src={snippet.thumbnails.high.url}
+//                         alt={snippet.title}
+//                       />
+//                     </a>
+//                   </div>
+//                   <div className="videoInfoWrapper">
+//                     <div className="videoTitle">
+//                       <a
+//                         href={vidLink}
+//                         target="_blank"
+//                         rel="noopener noreferrer"
+//                       >
+//                         {snippet.title}
+//                       </a>
+//                     </div>
+//                     <div className="videoDesc">{snippet.description}</div>
+//                   </div>
+//                 </div>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // export default Youtube;

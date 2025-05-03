@@ -3,16 +3,17 @@ import "./YouTube.css";
 
 const Youtube = () => {
   const [youTubeVideos, setYouTubeVideos] = useState([]);
+  const [sortOption, setsortOption] = useState(["date"]);
 
   useEffect(() => {
-const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
-const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=${apiKey}`;
+    const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=${sortOption}&key=${apiKey}`;
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => setYouTubeVideos(data.items))
       .catch((err) => console.error("Failed to fetch videos:", err));
-  }, []);
+  }, [sortOption]);
 
   return (
     <div className="allVideosWrapper">
@@ -22,6 +23,19 @@ const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&chann
             <div className="title-wraper bold video-title-wrapper">
               Latest Videos
             </div>
+          </div>
+
+          <div className="d-flex justify-content-start mb-4">
+            <select
+              className="form-select w-zero"
+              value={sortOption}
+              onChange={(e) => setsortOption(e.target.value)}
+            >
+              <option value="date">Latest</option>
+              <option value="rating">Most Popular</option>
+              <option value="relevance">Most Relevant</option>
+              <option value="viewcount">Most Viewed</option>
+            </select>
           </div>
           {youTubeVideos.map((video, i) => {
             const vidId = video?.id?.videoId;
@@ -104,10 +118,6 @@ export default Youtube;
 
 //   useEffect(() => {
 //     fetch(url
-//       // "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&
-//       // key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw"
-
-//       // "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCxA7AzkI2Sndf8S1G5rSkwQ&maxResults=9&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw" --Evangadi
 //     )
 //       .then((response) => response.json())
 //       .then((data) => {
@@ -168,7 +178,7 @@ export default Youtube;
 //!class components
 // import React, { Component } from "react";
 
-// // https://www.googleapis.com/youtube/v3/search?key=AIzaSyB4xNW_TeLDTO9tKxmHQAZskoy9Na0sxR0&channelId=UCE_M8A5yxnLfW0KghEeajjw&part=snippet,id&order=date&maxResults=1
+
 
 // class Youtube extends Component {
 //   constructor() {
@@ -180,7 +190,7 @@ export default Youtube;
 
 //   componentDidMount() {
 //     fetch(
-//       "https://www.googleapis.com/youtube/v3/search?key=AIzaSyBv_MveWxmNKF-fAAEDIy3qAIWtt0-YM1M&channelId=UCE_M8A5yxnLfW0KghEeajjw&part=snippet,id&order=date&maxResults=6"
+//       
 //     )
 //       .then((response) => response.json())
 //       .then((data) => {
@@ -246,8 +256,7 @@ export default Youtube;
 //   useEffect(() => {
 //     const fetchVideos = async () => {
 //       try {
-//         const response = await fetch(
-//           "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCE_M8A5yxnLfW0KghEeajjw&maxResults=8&order=date&key=AIzaSyAqhWLpt9Gg94wZLz2Ws05ixzhDPqwXeBw"
+//         const response = await fetch(url
 //         );
 //         const data = await response.json();
 //         setYouTubeVideos(data.items || []);

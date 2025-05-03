@@ -13,17 +13,17 @@
 }
 
 .videoInfoWrapper {
-  padding: 10px 20px;
+  padding: 9px 20px;
   text-align: left;
 }
 
 .videoDesc {
-  font-size: 0.6em;
+  font-size: 0.7em;
   color: #676767;
-  line-height: 0.45cm;
+  line-height: 0.5cm;
 }
 .videoTitle {
-    font-weight: 600;
+    font-weight: 700;
     line-height: 0.5cm;
 }
 

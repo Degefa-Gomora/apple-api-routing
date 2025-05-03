@@ -1,0 +1,32 @@
+/* Video Area */
+.youtubeVideosWrapper {
+  background: #fff;
+  padding: 50px;
+}
+
+.singleVideoWrapper {
+  background: #f3f2f2;
+  box-shadow: 4px 0px 13px rgba(158, 158, 158, 0.12);
+  margin-bottom: 30px;
+  max-height: 393px;
+  overflow: hidden;
+}
+
+.videoInfoWrapper {
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.videoDesc {
+  font-size: 0.6em;
+  color: #676767;
+  line-height: 0.45cm;
+}
+.videoTitle {
+    font-weight: 600;
+    line-height: 0.5cm;
+}
+
+.videoTitle a {
+    color: #000;
+}

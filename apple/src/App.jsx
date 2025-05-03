@@ -8,12 +8,10 @@ import SectionThree from "./Components/SectionThree/SectionThree.jsx";
 import SectionFour from "./Components/SectionFour/SectionFour.jsx";
 import SectionFive from "./Components/SectionFive/SectionFive.jsx";
 import SectionSix from "./Components/SectionSix/SectionSix.jsx";
-
-// import "./assets/css/styles.css";
+import YouTube from "./Components/Youtube/YouTube.jsx"
+import RatingBlock from "./Components/RatingBlock/RatingBlock.jsx";
 
 function App() {
-  // const [count, setCount] = useState(0)??????
-
   return (
     <>
       <Header />
@@ -24,6 +22,8 @@ function App() {
       <SectionFour />
       <SectionFive />
       <SectionSix />
+      <YouTube />
+      <RatingBlock />
       <Footer />
     </>
   );
